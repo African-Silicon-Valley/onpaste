@@ -1,0 +1,6 @@
+# `files` in package.json is authoritative; this is a safety net.
+src/
+test/
+.github/
+*.config.ts
+tsconfig.json
