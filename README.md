@@ -98,7 +98,7 @@ controller.abort();
 | Option | Type | Description |
 | --- | --- | --- |
 | `selector` | `string` | Listen on an ancestor, fire only for pastes whose target matches (event delegation). |
-| `types` | `string \| string[]` | Fire only when the clipboard offers one of these MIME types. Wildcards like `'image/*'` are allowed. |
+| `types` | `string \| string[]` | Fire only when the clipboard offers one of these MIME types. Matched against the clipboard's data types and the MIME types of pasted files, so `'image/*'` catches a pasted image. Wildcards are allowed. |
 | `preventDefault` | `boolean` | Block the native paste before the handler runs. |
 | `transform` | `(info) => string \| null \| undefined \| false` | Replace what gets pasted. |
 | `once` | `boolean` | Detach after the handler has run once. |

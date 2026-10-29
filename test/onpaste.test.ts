@@ -103,13 +103,47 @@ describe('options', () => {
     input.dispatchEvent(pasteEvent({ 'text/plain': 'x' }));
     expect(handler).not.toHaveBeenCalled();
 
-    input.dispatchEvent(
-      pasteEvent({}, [new File(['x'], 'a.png', { type: 'image/png' })]),
-    );
-    expect(handler).not.toHaveBeenCalled();
-
     input.dispatchEvent(pasteEvent({ 'image/png': 'blob' }));
     expect(handler).toHaveBeenCalledTimes(1);
+  });
+
+  it('types matches the MIME type of a pasted file', () => {
+    const input = field();
+    const handler = vi.fn();
+    onPaste(input, handler, { types: 'image/*' });
+
+    // Browsers report a pasted file as the data type 'Files' and keep the real
+    // MIME type on the File, so the filter has to look at info.files too.
+    input.dispatchEvent(pasteEvent({}, [new File(['x'], 'a.png', { type: 'image/png' })]));
+    expect(handler).toHaveBeenCalledTimes(1);
+    expect(handler.mock.calls[0]![0].types).toEqual(['Files']);
+
+    input.dispatchEvent(pasteEvent({}, [new File(['x'], 'a.pdf', { type: 'application/pdf' })]));
+    expect(handler).toHaveBeenCalledTimes(1);
+  });
+
+  it('types still matches the Files data type and exact file types', () => {
+    const input = field();
+    const handler = vi.fn();
+    onPaste(input, handler, { types: ['Files', 'text/html'] });
+
+    input.dispatchEvent(pasteEvent({}, [new File(['x'], 'a.pdf', { type: 'application/pdf' })]));
+    expect(handler).toHaveBeenCalledTimes(1);
+
+    input.dispatchEvent(pasteEvent({ 'text/plain': 'x', 'text/html': '<b>x</b>' }));
+    expect(handler).toHaveBeenCalledTimes(2);
+
+    input.dispatchEvent(pasteEvent({ 'text/plain': 'x' }));
+    expect(handler).toHaveBeenCalledTimes(2);
+  });
+
+  it('types ignores files with no MIME type', () => {
+    const input = field();
+    const handler = vi.fn();
+    onPaste(input, handler, { types: 'image/*' });
+
+    input.dispatchEvent(pasteEvent({}, [new File(['x'], 'mystery', { type: '' })]));
+    expect(handler).not.toHaveBeenCalled();
   });
 
   it('once detaches after the first paste', () => {

@@ -41,7 +41,10 @@ export interface OnPasteOptions {
   selector?: string;
   /**
    * Fire only when the clipboard offers at least one of these MIME types.
-   * Accepts exact types (`'text/html'`) and wildcards (`'image/*'`).
+   * Accepts exact types (`'text/html'`) and wildcards (`'image/*'`). Matched
+   * against the clipboard's data types and the MIME types of pasted files, so
+   * `'image/*'` catches a pasted image even though browsers list it under the
+   * data type `'Files'`.
    */
   types?: string | string[];
   /** Call `preventDefault()` before the handler runs, blocking the native paste. */

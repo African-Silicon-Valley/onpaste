@@ -95,7 +95,7 @@ export function onPaste(
     const host = isElement(currentTarget) ? currentTarget : element;
     const info: PasteInfo = buildInfo(clipboardEvent, element, host);
 
-    if (types && !hasType(info.types, types)) return;
+    if (types && !hasType(info.types, info.files, types)) return;
     if (preventDefault) clipboardEvent.preventDefault();
 
     if (transform) {

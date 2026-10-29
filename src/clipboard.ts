@@ -31,9 +31,20 @@ function matchesType(type: string, pattern: string): boolean {
   return type.startsWith(pattern.slice(0, -1));
 }
 
-/** Does the clipboard offer at least one of `patterns`? */
-export function hasType(types: string[], patterns: string[]): boolean {
-  return patterns.some((pattern) => types.some((type) => matchesType(type, pattern)));
+/**
+ * Does the clipboard offer at least one of `patterns`?
+ *
+ * Both the data types (`text/plain`, `text/html`, …) and the MIME types of any
+ * pasted files are considered. Browsers list a pasted file as the single data
+ * type `'Files'` and keep its real MIME type on the `File` itself, so matching
+ * `types` alone would never let `'image/*'` through.
+ */
+export function hasType(types: string[], files: File[], patterns: string[]): boolean {
+  return patterns.some(
+    (pattern) =>
+      types.some((type) => matchesType(type, pattern)) ||
+      files.some((file) => file.type !== '' && matchesType(file.type, pattern)),
+  );
 }
 
 export function buildInfo(
