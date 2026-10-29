@@ -10,6 +10,8 @@ clipboard contents already unpacked, and gets out of the way.
 - Rewrite pastes as they arrive (strip formatting, trim, sanitize)
 - Event delegation, MIME filters and `AbortSignal` support
 
+**[Try it in the playground →](https://onpaste.onrender.com)**
+
 ## Install
 
 ```bash
