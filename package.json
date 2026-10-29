@@ -17,12 +17,12 @@
   "author": "Milton Black (https://github.com/blackdice-byte)",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/blackdice-byte/onpaste.git"
+    "url": "git+https://github.com/African-Silicon-Valley/onpaste.git"
   },
   "bugs": {
-    "url": "https://github.com/blackdice-byte/onpaste/issues"
+    "url": "https://github.com/African-Silicon-Valley/onpaste/issues"
   },
-  "homepage": "https://github.com/blackdice-byte/onpaste#readme",
+  "homepage": "https://github.com/African-Silicon-Valley/onpaste#readme",
   "type": "module",
   "sideEffects": false,
   "main": "./dist/index.cjs",
