@@ -6,6 +6,11 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Added
+
+- Link to the hosted playground at https://onpaste.onrender.com from the
+  README and the package `homepage` field.
+
 ## [0.1.0]
 
 ### Added
